@@ -26,8 +26,6 @@ jobs:
     steps:
       - name: Print GitHub Actor
         run: echo "GitHub Actor ${{ github.actor }}"
-      - name: Print Masked Token
-        run: echo "Registry Token - ${{ github.token:0:8 }}****"
       # the build is fully handled by the reusable github action
       - name: Build Custom Image
         uses: blue-build/github-action@v1.5
