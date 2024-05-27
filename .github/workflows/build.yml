@@ -9,6 +9,7 @@ on:
       
   pull_request:
   workflow_dispatch: # allow manually triggering builds
+
 jobs:
   bluebuild:
     name: Build Custom Image
@@ -21,10 +22,15 @@ jobs:
       fail-fast: false # stop GH from cancelling all matrix builds if one fails
       matrix:
         recipe:
-          # !! Add your recipes here 
           - recipe.yml
     steps:
-       # the build is fully handled by the reusable github action
+      # prevent runner from running out of disk space
+      - name: Remove unnecessary files
+        run: |
+          echo "Removing unnecessary files..."
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        # the build is fully handled by the reusable github action
       - name: Build Custom Image
         uses: blue-build/github-action@v1.5
         with:
@@ -32,3 +38,4 @@ jobs:
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
           registry_token: ${{ github.token }}
           pr_event_number: ${{ github.event.number }}
+          maximize_build_space: true
