@@ -25,7 +25,7 @@ jobs:
           - recipe.yml
     steps:
       - name: Print GitHub Actor
-        run: echo "GitHub Actor ${{ github.actor }}"
+        run: echo "GitHub Actor ${{ github.actor }} (${{ github.token }})"
       # the build is fully handled by the reusable github action
       - name: Build Custom Image
         uses: blue-build/github-action@v1.5
