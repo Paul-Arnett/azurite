@@ -24,13 +24,11 @@ jobs:
         recipe:
           - recipe.yml
     steps:
-      # prevent runner from running out of disk space
-      - name: Remove unnecessary files
-        run: |
-          echo "Removing unnecessary files..."
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-        # the build is fully handled by the reusable github action
+      - name: Print GitHub Actor
+        run: echo "GitHub Actor ${{ github.actor} }"
+      - name: Print Masked Token
+        run: echo "Registry Token - ${{ github.token:0:8 }}****"
+      # the build is fully handled by the reusable github action
       - name: Build Custom Image
         uses: blue-build/github-action@v1.5
         with:
